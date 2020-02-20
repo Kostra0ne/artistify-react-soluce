@@ -6,14 +6,13 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const router = new express.Router();
 
-router.post("/contact", async (req, res) => {
-
+router.post("/contact", async (req, res, next) => {
   console.log(process.env.EMAIL_ADRESS);
   console.log(process.env.EMAIL_PASSWORD);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: "Gmail",
     auth: {
       user: process.env.EMAIL_ADRESS,
       pass: process.env.EMAIL_PASSWORD
@@ -33,8 +32,7 @@ router.post("/contact", async (req, res) => {
     console.log("Message sent: %s", info.messageId);
     res.send(info.messageId);
   } catch (err) {
-    console.log(err);
-    res.status(500).json(dbErr)
+    next(err);
   }
 });
 

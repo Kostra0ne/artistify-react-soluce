@@ -22,7 +22,7 @@ const getAverageRate = async idAlbum => {
   return avg.length ? avg[0].avgRate : 0;
 };
 
-router.get("/albums", (req, res) => {
+router.get("/albums", (req, res, next) => {
   // let's determine the sort query either a number or an empty object
   const sortQ = req.query.sort
     ? { [req.query.sort]: Number(req.query.order) }
@@ -55,11 +55,10 @@ router.get("/albums", (req, res) => {
       );
       res.json({ albums: albumsWithRatesAVG });
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.get("/albums/:id", (req, res) => {
-  
+router.get("/albums/:id", (req, res, next) => {
   albumModel
     .findOne({ _id: { $eq: req.params.id } })
     .populate("artist")
@@ -69,10 +68,10 @@ router.get("/albums/:id", (req, res) => {
       clone.avg = await getAverageRate(clone._id);
       res.json({ album: clone, userRate: null });
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.post("/albums", uploader.single("cover"), (req, res) => {
+router.post("/albums", uploader.single("cover"), (req, res, next) => {
   const newAlbum = {
     title: req.body.title,
     releaseDate: req.body.releaseDate,
@@ -89,10 +88,10 @@ router.post("/albums", uploader.single("cover"), (req, res) => {
     .then(dbRes => {
       res.json(dbRes);
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.patch("/albums/:id", uploader.single("cover"), (req, res) => {
+router.patch("/albums/:id", uploader.single("cover"), (req, res, next) => {
   const updatedAlbum = { ...req.body };
 
   if (req.file) updatedAlbum.cover = req.file.secure_url;
@@ -102,18 +101,16 @@ router.patch("/albums/:id", uploader.single("cover"), (req, res) => {
     .then(dbRes => {
       res.json(dbRes);
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-
-router.delete("/albums/:id", (req, res) => {
+router.delete("/albums/:id", (req, res, next) => {
   albumModel
     .findByIdAndDelete(req.params.id)
     .then(dbRes => {
       res.json(dbRes);
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
-
 
 module.exports = router;

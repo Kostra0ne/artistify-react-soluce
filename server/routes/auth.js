@@ -66,7 +66,6 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
 
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local", (err, user, failureDetails) => {
-    
     if (err || !user) return res.status(403).json("invalid user infos"); // 403 : Forbidden
 
     /**

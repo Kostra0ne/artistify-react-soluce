@@ -7,8 +7,7 @@ const router = new express.Router();
 const artistModel = require("../models/Artist");
 const albumModel = require("../models/Album");
 
-router.get("/search", async (req, res) => {
-  console.log(req.query);
+router.get("/search", async (req, res, next) => {
   const regExp = new RegExp(req.query.q, "i");
 
   const artistSearch = artistModel.find({
@@ -30,8 +29,7 @@ router.get("/search", async (req, res) => {
 
     res.json({ artists: dbRes[0], albums: dbRes[1] });
   } catch (dbErr) {
-    console.log(dbErr);
-    res.status(500).end();
+    next(dbErr);
   }
 });
 
