@@ -10,32 +10,19 @@ const models = {
   artists: require("../models/Artist")
 };
 
-router.get("/rates/:resourceType/:rId/users/:uId", async (req, res) => {
-  try {
-    const dbRes = await models[req.params.resourceType].findById(
-      req.params.rId,
-      {
-        rates: { $elemMatch: { author: req.params.uId } }
-      }
-    );
-    console.log("---Oô----");
-    const userRate = dbRes.rates.length ? dbRes.rates[0].rate : null
-    // console.log(dbRes.rates[0]);
-    console.log(userRate);
-    
-    res.status(200).send({userRate});
-  } catch (dbErr) {
-    res.status(500).send(dbErr);
-  }
+router.get("/rates/:resourceType/:rId/users/:uId", async (req, res, next) => {
+  models[req.params.resourceType]
+    .findById(req.params.rId, {
+      rates: { $elemMatch: { author: req.params.uId } }
+    })
+    .then(userRate => res.status(200).send({ userRate }))
+    .catch(next);
 });
 
-router.patch("/rates/:resourceType/:id", async (req, res) => {
+router.patch("/rates/:resourceType/:id", async (req, res, next) => {
   const currentModel = models[req.params.resourceType];
 
-  if (!currentModel)
-    return res
-      .status(500)
-      .json("inavlid resource type, check the rates router");
+  if (!currentModel) return next();
 
   const currentUserId = req.user._id;
   const { rate } = req.body;

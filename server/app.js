@@ -7,33 +7,33 @@ const express = require("express");
 const session = require("express-session"); //sessions make data persist between http calls
 const passport = require("passport"); // auth library (needs sessions)
 const cors = require("cors");
-
 const _DEVMODE = false;
 
 // ------------------------------------------
 // SERVER CONFIG
 // ------------------------------------------
-const server = express();
+const app = express();
 
 // // Allow server to parse body from POST Request
-// server.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 /**
- *  HEY YOU ! GOOD that you read comments, the lines below are MANDATORY :)
+ *  HEY YOU ! Happy to see that you read comments.
+ *  the lines below are useful (maybe in your project too :)
  */
 
 // Allow server to parse JSON from AJAX Request and apply the data to req.body
-server.use(express.json());
+app.use(express.json());
 
-// Allow server to parse cookies from http requests headers
-// server.use(cookieParser());
+// Allow server to extract/parse cookies from http requests headers (check req.cookies)
+// app.use(cookieParser());
 
 /*
 Create a session middleware with the given options.
 Note:  Session data is not saved in the cookie itself, just the session ID. 
 Session data is stored server-side.
 */
-server.use(
+app.use(
   session({
     cookie: { secure: false, maxAge: 4 * 60 * 60 * 1000 }, // 4 hours
     resave: true,
@@ -42,6 +42,7 @@ server.use(
   })
 );
 
+// this rule allows the client app to exchange via http via the server (AJAX ... Axios)
 const corsOptions = {
   origin: [process.env.CLIENT_URL],
   /* credentials : Configures the Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted  https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials */
@@ -49,45 +50,42 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-server.use(cors(corsOptions));
+// cors middle on
+app.use(cors(corsOptions));
 
 // passport init : these rules MUST set be after session setup (lines above)
-server.use(passport.initialize());
-server.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //------------------------------------------
 // Check Loggedin Users
 // ------------------------------------------
-
-server.use(function setDevTestLoggedinUser(req, res, next) {
-  if (_DEVMODE === true) {
-    console.log(`
-    ***
-    dev mode on ? ${_DEVMODE} !`);
-
+if (_DEVMODE === true) {
+  app.use(function devMode(req, res, next) {
     req.user = {
-      _id: "5de525245bd24cfeb10abeb9",
+      _id: "5de9c376fa023e21a766a606",
       username: "guillaume",
       email: "gui@foo.bar",
       avatar:
         "https://res.cloudinary.com/gdaconcept/image/upload/v1575298339/user-pictures/jadlcjjnspfhknucjfkd.png",
       role: "admin",
       favorites: {
-        artists: [],
-        albums: [],
+        artists: ["5ded0f32701e2f8732a0513c"],
+        albums: ["5ded24e254c2839b2badf011"],
         styles: [],
         labels: []
       }
     };
-  }
-  next();
-});
+
+    next();
+  });
+}
 
 //------------------------------------------
 // BASE BACKEND ROUTE
 // ------------------------------------------
 
-server.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("backend server is running");
 });
 
@@ -106,25 +104,15 @@ const stylesRouter = require("./routes/styles.js");
 const searchRouter = require("./routes/search.js");
 const usersRouter = require("./routes/users.js");
 
-server.use(albumsRouter);
-server.use(artistsRouter);
-server.use(authRouter);
-server.use(commentsRouter);
-server.use(contactRouter);
-server.use(labelRouter);
-server.use(ratesRouter);
-server.use(searchRouter);
-server.use(stylesRouter);
-server.use(usersRouter);
+app.use(albumsRouter);
+app.use(artistsRouter);
+app.use(authRouter);
+app.use(commentsRouter);
+app.use(contactRouter);
+app.use(labelRouter);
+app.use(ratesRouter);
+app.use(searchRouter);
+app.use(stylesRouter);
+app.use(usersRouter);
 
-// KICKSTART 
-
-server.listen(process.env.PORT, () => {
-  console.log(`
-    yay ! app is ready:
-    -------->
-    backend server runs @ : http://localhost:${process.env.PORT}
-    -------->
-    client server runs @ : ${process.env.CLIENT_URL}
-  `);
-});
+module.exports = app;

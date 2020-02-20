@@ -5,7 +5,7 @@ import FormContact from "../components/form/FormContact";
 export default function Contact() {
   return (
     <React.Fragment>
-      <h1 className="title">D.I.Y</h1>
+      <h1 className="title diy">D.I.Y</h1>
       <p className="parag">
         Use the provided client/server code to send email messages.<br />
         Use the course's form snippet to code the react component !<br />

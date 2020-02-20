@@ -1,8 +1,8 @@
 import React from "react";
 // custom tools
-import Latest from "../components/Latest";
-import CardArtist from "../components/card/CardArtist";
-import CardAlbum from "../components/card/CardAlbum";
+// import Latest from "../components/Latest";
+// import CardArtist from "../components/card/CardArtist";
+// import CardAlbum from "../components/card/CardAlbum";
 // images
 import crowd from "../assets/img/festival-crowd-1.jpg";
 import vynils from "../assets/img/vynils2.jpg";
@@ -42,7 +42,7 @@ export default function Home() {
 
       <img className="home-cover" src={crowd} alt="crowd in a music festival" />
 
-      <h1 className="title">D.I.Y</h1>
+      <h1 className="title diy">D.I.Y</h1>
       <p className="parag">
         Code a complete client/server cycle to fetch the 2 latests artists
         AND albums.<br /> Why don't you try CSS grid to organise the results display ?
@@ -72,7 +72,7 @@ export default function Home() {
 
       <img className="home-cover" src={stage} alt="stage in a music festival" />
       
-      <h1 className="title">D.I.Y</h1>
+      <h1 className="title diy">D.I.Y</h1>
       <p className="parag">
         Code a complete client/server cycle to fetch the 4 best rated artists
         AND albums

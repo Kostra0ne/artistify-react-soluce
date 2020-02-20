@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function List({ data, cssList, cssItem, Component }) {
+export default function List({ data, cssList = "list generic", cssItem = "item", Component }) {
 
   if (!data) return <p>Error : Component List expects an iterable "data" props</p>;
 
   return (
-    <ul className={`list ${cssList || "generic"}`}>
+    <ul className={cssList}>
       {Boolean(data.length) ? data.map((d, i) => (
         <li key={i} className={cssItem}>
           {Component && <Component data={d} />}

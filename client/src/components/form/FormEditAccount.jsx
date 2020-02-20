@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import IconAvatarAdmin from "../icon/IconAvatarAdmin";
 import UserContext from "../../auth/UserContext";
-import APIHandler from "../../api/APIHandler";
 // styles
 import "../../styles/form.css";
 
@@ -38,7 +37,7 @@ export default function FormEditAccount() {
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <h3 className="title">D.I.Y</h3>
+      <h3 className="title diy">D.I.Y (Form Edit Profile)</h3>
       <p className="parag">
         The profile update process is incomplete...<br></br>
         Use the provided code and send the state to server with axios.

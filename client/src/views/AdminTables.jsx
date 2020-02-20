@@ -13,7 +13,7 @@ import "./../styles/table.css";
 import "./../styles/icon-color.css";
 // IMPORTANT NOTE :
 // The AdminTables component below uses genericity
-// Be aware that it's really easier to create separate tables components for your different collection
+// for your project : Be aware that it's really easier to create separate tables components for your different collection
 // ...
 
 const headColumns = {

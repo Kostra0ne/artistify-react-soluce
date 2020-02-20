@@ -20,7 +20,7 @@ export default function Albums() {
 
   return (
     <React.Fragment>
-      <h1 className="title">D.I.Y</h1>
+      <h1 className="title diy">D.I.Y</h1>
       <p>
         Fetch all Albums from the database.
         <br />
@@ -32,7 +32,7 @@ export default function Albums() {
         <br />
         If the albums list is empty, provide a default view.
       </p>
-      <h1 className="title">D.I.Y</h1>
+      <h1 className="title diy">D.I.Y</h1>
       <p>
         Import a custom {`<IconFavorite />`} on each album card.
         <br />

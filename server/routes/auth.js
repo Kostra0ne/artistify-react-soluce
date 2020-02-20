@@ -50,23 +50,14 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
     .then(newUserFromDB => {
       // passport in action below
       req.login(newUserFromDB, err => {
-        if (err)
-          // bad status
-          res
-            .status(500)
-            .json("Something went wrong with automatic login after signup");
-        // all good
-        res.status(200).json(req.user);
+        if (err) next(err);
       });
     })
-    .catch(apiErr => {
-      res.status(409).json(apiErr); // 409	Conflict
-    });
+    .catch(next);
 });
 
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local", (err, user, failureDetails) => {
-    
     if (err || !user) return res.status(403).json("invalid user infos"); // 403 : Forbidden
 
     /**

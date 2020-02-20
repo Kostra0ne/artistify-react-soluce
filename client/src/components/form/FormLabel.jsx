@@ -14,31 +14,37 @@ export default withRouter(function FormLabel({
   history,
   match
 }) {
-  const [name, setName] = useState("");
-  const [logo, setLogo] = useState("");
-  const [logoTmp, setLogoTmp] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [street, setStreet] = useState("");
-  const [streetNb, setStreetNb] = useState("");
+  const [
+    { name, logo, logoTmp, city, country, street, streetNb },
+    setState
+  ] = useState({
+    name: "",
+    logo: "",
+    logoTmp: "",
+    city: "",
+    country: "",
+    street: "",
+    streetNb: ""
+  });
 
   useEffect(() => {
     const initFormData = async () => {
       const apiRes = await APIHandler.get(`/labels/${_id}`);
-      setName(apiRes.data.name);
-      setLogo(apiRes.data.logo);
-      setCountry(apiRes.data.country);
-      setCity(apiRes.data.city);
-      setStreet(apiRes.data.street);
-      setStreetNb(apiRes.data.streetNb);
+      delete apiRes.data._id;
+      setState({ ...apiRes.data });
     };
 
     if (mode === "edit") initFormData();
 
-    return () => {
-      console.log("cleanup");
-    };
   }, [mode, _id]);
+
+  const handleChange = e => {
+    e.persist();
+    setState(prevValues => ({
+      ...prevValues,
+      [e.target.id]: e.target.value
+    }));
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -54,7 +60,6 @@ export default withRouter(function FormLabel({
     try {
       if (mode === "create") await APIHandler.post("/labels", fd);
       else await APIHandler.patch(`/labels/${match.params.id}`, fd);
-
       // here, we access history as a destructured props (see the parameters of this component)
       // history is accessible because we wrapped the component in the withROuter fiunction
       history.push("/admin/labels");
@@ -67,16 +72,15 @@ export default withRouter(function FormLabel({
     const reader = new FileReader();
     reader.onloadend = () => {
       // when the fileReader ends reading image  ...
-      const baseString = reader.result;
-      setLogo(file);      
-      setLogoTmp(baseString); // set the tmp logo as an image source before upload
+      const base64String = reader.result;
+      // add the actual file to the state + the tmp logo as a preview before upload
+      setState((preValues) => ({...preValues, logo: file, logoTmp: base64String}));
     };
     reader.readAsDataURL(file); // read the file from the local disk
   };
 
-
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit} onChange={handleChange}>
       <label className="label" htmlFor="name">
         name
       </label>
@@ -85,13 +89,15 @@ export default withRouter(function FormLabel({
         id="name"
         type="text"
         defaultValue={name}
-        onChange={e => setName(e.target.value)}
       />
 
       <label className="label" htmlFor="logo">
         logo
       </label>
-      <CustomInputFile avatar={logoTmp || logo} clbk={e => handleLogo(e.target.files[0])} />
+      <CustomInputFile
+        avatar={logoTmp || logo}
+        clbk={e => handleLogo(e.target.files[0])}
+      />
 
       <label className="label" htmlFor="country">
         country
@@ -101,7 +107,6 @@ export default withRouter(function FormLabel({
         id="country"
         type="text"
         defaultValue={country}
-        onChange={e => setCountry(e.target.value)}
       />
 
       <label className="label" htmlFor="city">
@@ -112,7 +117,6 @@ export default withRouter(function FormLabel({
         id="city"
         type="text"
         defaultValue={city}
-        onChange={e => setCity(e.target.value)}
       />
 
       <label className="label" htmlFor="street">
@@ -123,7 +127,6 @@ export default withRouter(function FormLabel({
         id="street"
         type="text"
         defaultValue={street}
-        onChange={e => setStreet(e.target.value)}
       />
 
       <label className="label" htmlFor="streetNb">
@@ -134,7 +137,6 @@ export default withRouter(function FormLabel({
         id="streetNb"
         type="number"
         defaultValue={streetNb}
-        onChange={e => setStreetNb(e.target.value)}
       />
 
       <button className="btn">ok</button>

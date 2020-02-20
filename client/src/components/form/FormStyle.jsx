@@ -11,22 +11,20 @@ export default withRouter(function FormStyle({
   history,
   match
 }) {
-  const [name, setName] = useState("");
-  const [wikiURL, setWikiURL] = useState("");
-  const [color, setColor] = useState("#000");
+  const [{ color, name, wikiURL }, setState] = useState({
+    color: "#000",
+    name: "",
+    wikiURL: ""
+  });
 
   useEffect(() => {
     const initFormData = async () => {
       const apiRes = await APIHandler.get(`/styles/${_id}`);
-      console.log(apiRes);
-      setName(apiRes.data.name);
-      setWikiURL(apiRes.data.wikiURL);
-      setColor(apiRes.data.color);
+      delete apiRes.data._id;
+      setState({...apiRes.data});
     };
 
     if (mode === "edit") initFormData();
-
-    return () => console.log("cleanup");
   }, [mode, _id]);
 
   const handleSubmit = async e => {
@@ -37,11 +35,10 @@ export default withRouter(function FormStyle({
       name,
       wikiURL
     };
-console.log(history)
+
     try {
       if (mode === "create") await APIHandler.post("/styles", styleInfos);
       else await APIHandler.patch(`/styles/${match.params.id}`, styleInfos);
-
       // here, we access history as a destructured props (see the parameters of this component)
       // history is accessible since we wrapped the component in the withRouter function
       history.push("/admin/styles");
@@ -50,8 +47,16 @@ console.log(history)
     }
   };
 
+  const handleChange = e => {
+    e.persist();
+    setState(prevValues => ({
+      ...prevValues,
+      [e.target.id]: e.target.value
+    }));
+  };
+
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit} onChange={handleChange}>
       <label className="label" htmlFor="name">
         name
       </label>
@@ -60,7 +65,6 @@ console.log(history)
         id="name"
         type="text"
         defaultValue={name}
-        onChange={e => setName(e.target.value)}
       />
 
       <label className="label" htmlFor="wikiURL">
@@ -71,7 +75,6 @@ console.log(history)
         id="wikiURL"
         type="text"
         defaultValue={wikiURL}
-        onChange={e => setWikiURL(e.target.value)}
       />
 
       <label className="label" htmlFor="color">
@@ -81,8 +84,8 @@ console.log(history)
         className="input color is-clickable"
         id="color"
         type="color"
-        value={color}
-        onChange={e => setColor(e.target.value)}
+        defaultValue={color}
+    
       />
 
       <button className="btn">ok</button>

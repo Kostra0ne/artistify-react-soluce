@@ -6,6 +6,8 @@ import IconFav from "../icon/IconFavorite";
 import "./../../styles/icon-color.css";
 
 export default function CardArtist({ data }) {
+  console.log(data);
+  
   return (
     <React.Fragment>
       <IconFav resourceId={data._id} resourceType="albums" isAlreadyFavorite={data.isFavorite} />

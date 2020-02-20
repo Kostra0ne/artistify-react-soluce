@@ -7,61 +7,43 @@ const styleModel = require("../models/Style");
 
 // BACKEND ROUTES
 
-router.get("/styles", (req, res) => {
+router.get("/styles", (req, res, next) => {
   styleModel
     .find()
-    // .then(dbRes => res.json(dbRes))
     .then(dbRes => res.status(200).json({ styles: dbRes }))
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(next);
 });
 
-router.get("/styles/:id", (req, res) => {
+router.get("/styles/:id", (req, res, next) => {
   styleModel
-    .findOne({_id: req.params.id})
-    // .then(dbRes => res.json(dbRes))
+    .findOne({ _id: req.params.id })
     .then(dbRes => res.status(200).json(dbRes))
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(next);
 });
 
-router.post("/styles", (req, res) => {
-  const newStyle = {
-    name: req.body.name,
-    color: req.body.color,
-    wikiURL: req.body.wikiURL
-  };
-  console.log(newStyle);
+router.post("/styles", (req, res, next) => {
+  const { name, color, wikiURL } = req.body;
 
   styleModel
-    .create(newStyle)
-    .then(dbRes => {
-      res.status(200).json(dbRes);
-    })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .create({ name, color, wikiURL })
+    .then(dbRes => res.status(200).json(dbRes))
+    .catch(next);
 });
 
-router.patch("/styles/:id", (req, res) => {
-  const updatedStyle = {
-    name: req.body.name,
-    color: req.body.color,
-    wikiURL: req.body.wikiURL
-  };
+router.patch("/styles/:id", (req, res, next) => {
+  const { name, color, wikiURL } = req.body;
 
   styleModel
-    .findByIdAndUpdate(req.params.id, updatedStyle)
-    .then(dbRes => {
-      res.status(200).json(dbRes);
-    })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .findByIdAndUpdate(req.params.id, { name, color, wikiURL })
+    .then(dbRes => res.status(200).json(dbRes))
+    .catch(next);
 });
 
-router.delete("/styles/:id", (req, res) => {
+router.delete("/styles/:id", (req, res, next) => {
   styleModel
     .findByIdAndRemove(req.params.id)
-    .then(dbRes => {
-      res.json(dbRes);
-    })
-    .catch(dbErr => console.log(dbErr));
+    .then(dbRes => res.json(dbRes))
+    .catch(next);
 });
-
 
 module.exports = router;

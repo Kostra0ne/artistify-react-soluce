@@ -20,7 +20,7 @@ export default class Artists extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 className="title">D.I.Y (Artists)</h1>
+        <h1 className="title diy">D.I.Y (Artists)</h1>
         <p>
           Fetch all artists from the database.
           <br />
@@ -33,7 +33,7 @@ export default class Artists extends Component {
           If the artists list is empty, provide a default view.
         </p>
 
-        <h1 className="title">D.I.Y (IconFavorite)</h1>
+        <h1 className="title diy">D.I.Y (IconFavorite)</h1>
         <p>
           Import a custom {`<IconFavorite />`} on each artist card.
           <br />

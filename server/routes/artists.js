@@ -12,7 +12,7 @@ const getAverageRate = async idArtist => {
     { $unwind: "$rates" },
     { $match: { _id: idArtist } },
     {
-      $group: {
+      $group: { 
         _id: "$_id",
         avgRate: { $avg: "$rates.rate" }
       }
@@ -22,7 +22,7 @@ const getAverageRate = async idArtist => {
   return avg.length ? avg[0].avgRate : 0;
 };
 
-router.get("/artists", async (req, res) => {
+router.get("/artists", async (req, res, next) => {
   // let's determine the sort query object ()
   const sortQ = req.query.sort
     ? { [req.query.sort]: Number(req.query.order) }
@@ -43,18 +43,19 @@ router.get("/artists", async (req, res) => {
           // the following map is async, updating each artist with an avg rate
           const copy = res.toJSON(); // copy the artist object (mongoose response are immutable)
           copy.avg = await getAverageRate(res._id); // get the average rates fr this artist
+          
           copy.isFavorite =
-            req.user && req.user.favorites.artists.includes(copy._id);
+            req.user && req.user.favorites.artists.includes(copy._id.toString());
           return copy; // return to the mapped result array
         })
       );
 
       res.json({ artists: artistsWithRatesAVG }); // send the augmented result back to client
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(next);
 });
 
-router.get("/artists/:id", (req, res) => {
+router.get("/artists/:id", (req, res, next) => {
   const artist = artistModel.findOne({ _id: req.params.id }).populate("style");
   const albums = albumModel.find({ artist: req.params.id });
   const userRate = artistModel.findOne(
@@ -74,15 +75,15 @@ router.get("/artists/:id", (req, res) => {
         userRate: dbRes[2]
       });
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(next);
 });
 
-router.get("/filtered-artists", (req, res) => {
+router.get("/filtered-artists", (req, res, next) => {
   const q = req.query.band === "true" ? { isBand: true } : {};
   artistModel
     .find(q)
     .then(dbRes => res.json(dbRes))
-    .catch(dbErr => res.json(dbErr));
+    .catch(next);
 });
 
 router.post("/artists", (req, res) => {
@@ -96,13 +97,11 @@ router.post("/artists", (req, res) => {
 
   artistModel
     .create(newArtist)
-    .then(dbRes => {
-      res.json(dbRes);
-    })
+    .then(dbRes => res.json(dbRes))
     .catch(dbErr => res.status(500).send(dbErr));
 });
 
-router.patch("/artists/:id", async (req, res) => {
+router.patch("/artists/:id", async (req, res, next) => {
   const updatedArtist = {
     name: req.body.name,
     description: req.body.description,
@@ -113,19 +112,15 @@ router.patch("/artists/:id", async (req, res) => {
 
   artistModel
     .findByIdAndUpdate(req.params.id, updatedArtist)
-    .then(dbRes => {
-      res.status(200).json(dbRes);
-    })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .then(dbRes => res.status(200).json(dbRes))
+    .catch(next);
 });
 
-router.delete("/artists/:id", (req, res) => {
+router.delete("/artists/:id", (req, res, next) => {
   artistModel
     .findByIdAndRemove(req.params.id)
     .then(dbRes => res.status(200).json(dbRes))
-    .catch(dbErr => {
-      res.status(500).json(dbErr);
-    });
+    .catch(next);
 });
 
 module.exports = router;

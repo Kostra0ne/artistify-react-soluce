@@ -19,12 +19,6 @@ export default withRouter(function FormArtist({
   const [styles, setStyles] = useState(null);
 
   useEffect(() => {
-    if (selectStylesEl.current)
-    console.log("=>", selectStylesEl);
-    
-  }, [selectStylesEl]);
-
-  useEffect(() => {
     // use to fetch the previous database values for the artist to update
     const initFormData = async () => {
       const apiRes = await APIHandler.get(`/artists/${_id}`);

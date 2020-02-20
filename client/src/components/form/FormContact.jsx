@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import apiHandler from "../../api/APIHandler";
-import APIHandler from "../../api/APIHandler";
+
 // styles
 import "../../styles/form.css";
 

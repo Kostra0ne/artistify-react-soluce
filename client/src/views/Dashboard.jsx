@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 // custom tools
 import FormEditAccount from "../components/form/FormEditAccount";
-import UserFavorites from "../components/user/UserFavorites";
+import UserFavorites from "../components/admin/UserFavorites";
+import DataViz from "../components/admin/DataViz";
 import IconSignout from "../components/icon/IconSignout";
 
 export default function Dashboard() {
   const [UIState, setUIState] = useState("edit");
 
   return (
-    <div className="page dashboard">
+    <>
       <h1 className="title">
         <span>Dashboard</span>
         <IconSignout />
@@ -27,9 +28,16 @@ export default function Dashboard() {
         >
           my favorites
         </button>
+        <button
+          onClick={() => setUIState("statistics")}
+          className={`btn ${UIState === "statistics" ? "is-active" : ""}`}
+        >
+          statistics
+        </button>
       </div>
       {UIState === "edit" && <FormEditAccount />}
       {UIState === "favorites" && <UserFavorites />}
-    </div>
+      {UIState === "statistics" && <DataViz />}
+    </>
   );
 }

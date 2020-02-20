@@ -54,14 +54,14 @@ export default function Album({ match }) {
 
   return (
     <>
-      <h1 className="title">D.I.Y (Album)</h1>
+      <h1 className="title diy">D.I.Y (Album)</h1>
       <p>
         Use the image below to code the {`<Album />`} component.
         <br />
         This component import child components: {`<Stars />`} and {`<Comments />`}{" "}
       </p>
 
-      <h1 className="title">D.I.Y (Stars)</h1>
+      <h1 className="title diy">D.I.Y (Stars)</h1>
       <p>
         The Stars component allow the end-users to rate an artist/album.
         <br />
@@ -74,7 +74,7 @@ export default function Album({ match }) {
 
       <hr />
 
-      <h1 className="title">D.I.Y (Comments)</h1>
+      <h1 className="title diy">D.I.Y (Comments)</h1>
       <p>
         Import a custom {`<Comments />`} allowing the end-users to post comments
         in database related to the current artist.
