@@ -117,7 +117,20 @@ server.use(searchRouter);
 server.use(stylesRouter);
 server.use(usersRouter);
 
-// KICKSTART 
+// Page not found
+
+server.use((req, res) => {
+  res.status(400).send("Requested resource not found");
+});
+
+// Error handling
+server.use(function(err, req, res) {
+  console.log(err, err.message ? err.message : "Something bad happened");
+  res.status(500).send({
+    message: err.message ? err.message : "Something bad happened"
+  });
+});
+// KICKSTART
 
 server.listen(process.env.PORT, () => {
   console.log(`

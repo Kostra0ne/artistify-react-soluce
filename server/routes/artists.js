@@ -22,7 +22,7 @@ const getAverageRate = async idArtist => {
   return avg.length ? avg[0].avgRate : 0;
 };
 
-router.get("/artists", async (req, res) => {
+router.get("/artists", async (req, res, next) => {
   // let's determine the sort query object ()
   const sortQ = req.query.sort
     ? { [req.query.sort]: Number(req.query.order) }
@@ -51,10 +51,10 @@ router.get("/artists", async (req, res) => {
 
       res.json({ artists: artistsWithRatesAVG }); // send the augmented result back to client
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.get("/artists/:id", (req, res) => {
+router.get("/artists/:id", (req, res, next) => {
   const artist = artistModel.findOne({ _id: req.params.id }).populate("style");
   const albums = albumModel.find({ artist: req.params.id });
   const userRate = artistModel.findOne(
@@ -74,15 +74,15 @@ router.get("/artists/:id", (req, res) => {
         userRate: dbRes[2]
       });
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.get("/filtered-artists", (req, res) => {
+router.get("/filtered-artists", (req, res, next) => {
   const q = req.query.band === "true" ? { isBand: true } : {};
   artistModel
     .find(q)
     .then(dbRes => res.json(dbRes))
-    .catch(dbErr => res.json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
 router.post("/artists", (req, res) => {
@@ -99,10 +99,10 @@ router.post("/artists", (req, res) => {
     .then(dbRes => {
       res.json(dbRes);
     })
-    .catch(dbErr => res.status(500).send(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.patch("/artists/:id", async (req, res) => {
+router.patch("/artists/:id", async (req, res, next) => {
   const updatedArtist = {
     name: req.body.name,
     description: req.body.description,
@@ -116,15 +116,15 @@ router.patch("/artists/:id", async (req, res) => {
     .then(dbRes => {
       res.status(200).json(dbRes);
     })
-    .catch(dbErr => res.status(500).json(dbErr));
+    .catch(dbErr => next(dbErr));
 });
 
-router.delete("/artists/:id", (req, res) => {
+router.delete("/artists/:id", (req, res, next) => {
   artistModel
     .findByIdAndRemove(req.params.id)
     .then(dbRes => res.status(200).json(dbRes))
     .catch(dbErr => {
-      res.status(500).json(dbErr);
+      next(dbErr);
     });
 });
 

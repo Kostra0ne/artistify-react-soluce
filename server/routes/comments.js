@@ -6,7 +6,7 @@ const express = require("express");
 const router = new express.Router();
 const commentModel = require("../models/Comment");
 
-router.get("/comments/:type/:id", async (req, res) => {
+router.get("/comments/:type/:id", async (req, res, next) => {
   try {
     const comments = await commentModel
       .find({
@@ -14,12 +14,12 @@ router.get("/comments/:type/:id", async (req, res) => {
       })
       .populate("author");
     res.status(200).json({ comments });
-  } catch(dbErr) {
-    res.status(500).json(dbErr);
+  } catch (dbErr) {
+    next(dbErr);
   }
 });
 
-router.post("/comments/:type/:id", async (req, res) => {
+router.post("/comments/:type/:id", async (req, res, next) => {
   const newComment = {
     message: req.body.message,
     author: req.user._id,
@@ -31,8 +31,8 @@ router.post("/comments/:type/:id", async (req, res) => {
   try {
     const c = await commentModel.create(newComment);
     res.status(200).json({ newComment: c });
-  } catch(dbErr) {
-    res.status(500).json(dbErr);
+  } catch (dbErr) {
+    next(dbErr);
   }
 });
 

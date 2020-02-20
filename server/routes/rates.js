@@ -10,7 +10,7 @@ const models = {
   artists: require("../models/Artist")
 };
 
-router.get("/rates/:resourceType/:rId/users/:uId", async (req, res) => {
+router.get("/rates/:resourceType/:rId/users/:uId", async (req, res, next) => {
   try {
     const dbRes = await models[req.params.resourceType].findById(
       req.params.rId,
@@ -19,17 +19,17 @@ router.get("/rates/:resourceType/:rId/users/:uId", async (req, res) => {
       }
     );
     console.log("---Oô----");
-    const userRate = dbRes.rates.length ? dbRes.rates[0].rate : null
+    const userRate = dbRes.rates.length ? dbRes.rates[0].rate : null;
     // console.log(dbRes.rates[0]);
     console.log(userRate);
-    
-    res.status(200).send({userRate});
+
+    res.status(200).send({ userRate });
   } catch (dbErr) {
-    res.status(500).send(dbErr);
+    next(dbErr);
   }
 });
 
-router.patch("/rates/:resourceType/:id", async (req, res) => {
+router.patch("/rates/:resourceType/:id", async (req, res, next) => {
   const currentModel = models[req.params.resourceType];
 
   if (!currentModel)
@@ -61,7 +61,7 @@ router.patch("/rates/:resourceType/:id", async (req, res) => {
 
     // done !
   } catch (dbErr) {
-    res.status(500).json(dbErr);
+    next(dbErr);
   }
 });
 
