@@ -1,0 +1,29 @@
+- add cover upload for artists
+- plug secured (https or private key) contact form
+- sort/filter resources by rates
+- sort/filter resources by date
+- sort resources alphabeticaly
+- sort resources by creation date
+- sort album by release date
+- show user favorites dedicated in dashboard tab
+- enable third party APIs calls to stream content for various resources
+- upvote / downvote comments
+- friend / unfriend system
+- chat with friends
+- unregister user
+- home
+- list all styles cards (+ associated resources in details)
+- list all labels cards (+ associated resources in details)
+
+
+
+ D) missing auth middlewares (backend)
+ on protected routes: should perform systematic server side check auth cookie and send 403 error if missing 
+
+
+ E) axios interceptors leverage ?
+ systematicaly intercept all 403 response and handle automatic signout
+
+ F) handling deleted resources
+ - check null references in other collections (check populate)
+ - display view components for missing resources

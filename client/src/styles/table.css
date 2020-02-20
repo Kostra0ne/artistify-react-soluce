@@ -1,0 +1,41 @@
+.table {
+  min-width: 70vw;
+  max-width: 80vw;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td,
+.table .cell {
+  padding: 10px;
+}
+
+.table thead th {
+  border-right: 1px solid whitesmoke;
+}
+
+.table thead th:last-of-type {
+  border-right: none;
+  border-left: 1px solid whitesmoke;
+}
+
+.table thead {
+  background: black;
+  color: whitesmoke;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #465055;
+  color: whitesmoke;
+}
+
+.table td:not(.name) {
+  text-align: center;
+}
+
+.table .color-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,20 @@
+
+#header_main .icon-dashboard {
+    grid-column: 8 / 9;
+    grid-row: 1 / 2;
+    justify-content: flex-end;
+    align-items: center;
+    display: flex;
+  }
+  
+  @media (max-width: 600px) {
+    #header_main .icon-dashboard {
+      grid-column: 7 / 8;
+    }
+  }
+  
+  #header_main .icon-dashboard svg {
+    height: 100%;
+    width: 100%;
+  }
+  

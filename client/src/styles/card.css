@@ -1,0 +1,43 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  /* grid-template-rows: repeat(auto-fit, minmax(220px, 1fr)); */
+  grid-gap: 1rem;
+}
+
+.shadow-box {
+  border-left: 1px solid #0000001f;
+  box-shadow: 6px 6px 15px -9px rgba(0, 0, 0, 0.75);
+}
+
+.card {
+  border-left: 1px solid #0000001f;
+  box-shadow: 6px 6px 15px -9px rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: relative;
+}
+
+.card .title {
+  text-align: center;
+}
+
+.card .link:hover {
+  color: black;
+  font-weight: bold;
+}
+
+.card .color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+}
+
+.card.album .cover {
+  max-width: 85%;
+  margin: auto;
+}

@@ -1,0 +1,56 @@
+#root {
+  max-width: 1220px;
+  margin: auto;
+  overflow-x: scroll;
+}
+
+#header_main {
+  background: black;
+  color: whitesmoke;
+  display: grid;
+  font-family: overpass-mono;
+  grid-template-columns: repeat(7, 1fr) 20px;
+  grid-template-rows: 30px 30px;
+  padding: 5px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: inherit;
+  z-index: 10;
+}
+
+#content_main {
+  min-height: 100vh;
+  padding: 80px 20px 0;
+  position: relative;
+}
+
+#footer_main {
+  align-items: center;
+  background: black;
+  bottom: -1px; /* comment to toggle sticky footer  */
+  color: whitesmoke;
+  display: flex;
+  font-size: 0.8rem;
+  height: 30px;
+  justify-content: flex-end;
+  padding: 5px 20px;
+  position: sticky;
+  top: calc(100vh - 60px);
+}
+
+@media (min-width: 600px) {
+}
+
+@media (max-width: 600px) {
+  #header_main {
+    grid-template-columns: repeat(6, 1fr) 20px 20px;
+    grid-gap: 0 7px;
+  }
+  #header_main,
+  #content_main,
+  #footer_main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

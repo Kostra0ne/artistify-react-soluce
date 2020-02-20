@@ -1,0 +1,31 @@
+
+clone the repo 
+$ git clone https://github.com/owlab-io/artistify.git
+
+-----
+
+setup a .env for server
+assign correct values to the mandatory following keys: 
+
+CLIENT_URL = ???
+CLOUDINARY_NAME = ???s
+CLOUDINARY_KEY = ???
+CLOUDINARY_SECRET = ???
+MONGO_URI = ???
+PORT = ???
+SECRET_SESSION = ???
+
+-----
+
+setup a .env for client
+assign correct values to the mandatory following keys: 
+
+REACT_APP_BACKEND_URL = ???
+
+-----
+
+from ./artistify
+launch the install script
+$ npm run installer
+
+-----

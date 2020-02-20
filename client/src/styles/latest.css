@@ -1,0 +1,35 @@
+.latests {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 100px 100px;
+  padding-bottom: 40px;
+}
+
+.latests > .title {
+  grid-row: 1 / 2;
+  background: black;
+  color: whitesmoke;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.latests > .title:nth-child(1) {
+  border-right: 1px solid whitesmoke;
+}
+
+.latests .cards {
+  grid-template-columns: repeat(2, 1fr);
+  grid-row: 2 / 3;
+}
+
+.latests .card .cover {
+  display: none;
+}
+
+.latests .card .title {
+  margin: 0;
+}
+.latests .has-no-result {
+  text-align: center;
+}

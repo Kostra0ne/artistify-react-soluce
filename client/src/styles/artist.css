@@ -1,0 +1,77 @@
+.page.artist {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 80px 1fr 1fr;
+  grid-gap: 10px 30px;
+  min-height: 85vh;
+}
+
+.page.artist > .title {
+  grid-column: 1 / 6;
+  grid-row: 1 / 2;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.page.artist .discography .title {
+  border-bottom: 1px solid #283949c7;
+}
+
+.page.artist .all-stars {
+  grid-column: 6 / 9;
+  grid-row: 1 / 2;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page.artist .description {
+  border-top: 1px solid #283949c7;
+  grid-column: 1 / 6;
+  grid-row: 2 / 3;
+  max-width: none;
+  padding: 10px 0 20px;
+}
+
+.page.artist .discography {
+  grid-column: 1 / 6;
+}
+
+.page.artist .discography .albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 100px));
+  gap: 20px;
+  grid-template-rows: 50px;
+  grid-row: 3 / 4;
+  grid-column: 1 / 6;
+}
+
+.page.artist .discography .albums .title {
+  display: block;
+  font-size: 0.85rem;
+  margin: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  .page.artist {
+    grid-row-gap: 20px;
+    grid-template-rows: 80px 40vh 1fr 1fr;
+  }
+
+  .page.artist .description,
+  .page.artist .comments,
+  .page.artist .discography {
+    grid-column: 1 / 9;
+  }
+
+  .page.artist .comments {
+    grid-row: 4 / 5;
+  }
+}

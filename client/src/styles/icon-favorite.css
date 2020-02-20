@@ -1,0 +1,13 @@
+.icon-favorite {
+  bottom: 10px;
+  position: absolute;
+  right: 10px;
+  transform: scale(1.1);
+  transition: transform 0.3s linear, color 0.3s ease-in;
+}
+
+.icon-favorite:hover,
+.icon-favorite.is-favorite {
+  color: #f00;
+  transform: scale(1.5);
+}

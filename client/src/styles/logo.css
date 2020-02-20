@@ -1,0 +1,23 @@
+.logo {
+  color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.logo .text {
+  margin-left: 5px;
+}
+
+.logo svg {
+  font-size: 1rem;
+}
+
+
+#header_main .logo {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  margin: 0;
+}
