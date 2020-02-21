@@ -11,8 +11,11 @@ router.post("/contact", async (req, res) => {
   console.log(process.env.EMAIL_ADRESS);
   console.log(process.env.EMAIL_PASSWORD);
 
+  
+
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
+    // If you're using gmail, have a look at https://nodemailer.com/usage/using-gmail/ 
     service: 'Gmail',
     auth: {
       user: process.env.EMAIL_ADRESS,
