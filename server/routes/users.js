@@ -71,8 +71,7 @@ router.patch("/users/favorites/:resourceType/:id", async (req, res, next) => {
         { new: true }
       );
     }
-    console.log(dbRes);
-    console.log(dbRes.favorites[req.params.resourceType]);
+
     res.status(200).json({
       dbRes,
       // line below works as a toggle boolean usefull for the client

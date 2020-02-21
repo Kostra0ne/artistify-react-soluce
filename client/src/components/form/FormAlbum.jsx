@@ -3,6 +3,7 @@ import { withRouter, Link } from "react-router-dom";
 // custom tools
 import APIHandler from "./../../api/APIHandler";
 import CustomInputFile from "./../icon/IconAvatarAdmin";
+import LabPreview from "../LabPreview";
 // styles
 import "./../../styles/form.css";
 import "./../../styles/icon-avatar.css";
@@ -22,6 +23,28 @@ export default withRouter(function FormAlbum({
   const [labelID, setLabelID] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
   const [title, setTitle] = useState("");
+
+  // const {
+  //   artistID,
+  //   artists,
+  //   cover,
+  //   coverTmp,
+  //   description,
+  //   labels,
+  //   labelID,
+  //   releaseDate,
+  //   title
+  // } = useState({
+  //   artistID: null,
+  //   artists: null,
+  //   cover: null,
+  //   coverTmp: null,
+  //   description: null,
+  //   labels: null,
+  //   labelID: null,
+  //   releaseDate: null,
+  //   title: null
+  // });
 
   // useEffect used to get the previous database values for the album to update...
   useEffect(() => {
@@ -72,8 +95,6 @@ export default withRouter(function FormAlbum({
     };
 
     if (mode === "edit" && !ready) initFormData();
-
-    return () => console.log("cleanup");
   }, [mode, _id]);
 
   const handleSubmit = async e => {
@@ -98,7 +119,7 @@ export default withRouter(function FormAlbum({
 
       // just below, we access history as a destructured props (see the parameters of this component)
       // history is accessible since we wrapped the component in the withRouter function
-      // history.push("/admin/albums");
+      history.push("/admin/albums");
 
       // congrats : this form is now ready to use :)
     } catch (apiErr) {
@@ -117,7 +138,6 @@ export default withRouter(function FormAlbum({
     reader.readAsDataURL(file); // read the file from the local disk
   };
 
-
   return artists === undefined || labels === undefined ? (
     <div>loading...</div>
   ) : !artists.length ? (
@@ -126,84 +146,91 @@ export default withRouter(function FormAlbum({
       before adding album(s).
     </div>
   ) : (
-    <form className="form" onSubmit={handleSubmit}>
-      <label className="label" htmlFor="title">
-        title
-      </label>
-      <input
-        className="input"
-        id="title"
-        type="text"
-        defaultValue={title}
-        onChange={e => setTitle(e.target.value)}
-      />
+    <>
+      <h1 className="title diy">D.I.Y (FormAlbum)</h1>
+      <p>Code a form to Create/Update albums.</p>
+      <LabPreview name="artistForm" isSmall/>
+      <hr />
 
-      <label className="label" htmlFor="artists">
-        artist
-      </label>
-      <select
-        className="input"
-        id="artists"
-        value={artistID}
-        onChange={e => setArtistID(e.target.value)}
-      >
-        {Boolean(artists.length) &&
-          artists.map((a, i) => (
-            <option value={a._id} key={i}>
-              {a.name}
-            </option>
-          ))}
-      </select>
+      <form className="form" onSubmit={handleSubmit}>
+        <label className="label" htmlFor="title">
+          title
+        </label>
+        <input
+          className="input"
+          id="title"
+          type="text"
+          defaultValue={title}
+          onChange={e => setTitle(e.target.value)}
+        />
 
-      <label className="label" htmlFor="labels">
-        label
-      </label>
-      <select
-        className="input"
-        id="labels"
-        value={labelID}
-        onChange={e => setLabelID(e.target.value)}
-      >
-        {Boolean(labels.length) &&
-          labels.map((l, i) => (
-            <option value={l._id} key={i}>
-              {l.name}
-            </option>
-          ))}
-      </select>
+        <label className="label" htmlFor="artists">
+          artist
+        </label>
+        <select
+          className="input"
+          id="artists"
+          value={artistID}
+          onChange={e => setArtistID(e.target.value)}
+        >
+          {Boolean(artists.length) &&
+            artists.map((a, i) => (
+              <option value={a._id} key={i}>
+                {a.name}
+              </option>
+            ))}
+        </select>
 
-      <label className="label" htmlFor="releaseDate">
-        release date
-      </label>
-      <input
-        className="input"
-        id="releaseDate"
-        type="date"
-        defaultValue={releaseDate}
-        onChange={e => setReleaseDate(e.target.value)}
-      />
+        <label className="label" htmlFor="labels">
+          label
+        </label>
+        <select
+          className="input"
+          id="labels"
+          value={labelID}
+          onChange={e => setLabelID(e.target.value)}
+        >
+          {Boolean(labels.length) &&
+            labels.map((l, i) => (
+              <option value={l._id} key={i}>
+                {l.name}
+              </option>
+            ))}
+        </select>
 
-      <label className="label" htmlFor="cover">
-        cover
-      </label>
-      <CustomInputFile
-        avatar={coverTmp || cover}
-        clbk={e => handleCover(e.target.files[0])}
-      />
+        <label className="label" htmlFor="releaseDate">
+          release date
+        </label>
+        <input
+          className="input"
+          id="releaseDate"
+          type="date"
+          defaultValue={releaseDate}
+          onChange={e => setReleaseDate(e.target.value)}
+        />
 
-      <label className="label" htmlFor="description">
-        description
-      </label>
-      <textarea
-        className="input"
-        id="description"
-        cols="30"
-        rows="10"
-        defaultValue={description}
-        onChange={e => setDescription(e.target.value)}
-      ></textarea>
+        <label className="label" htmlFor="cover">
+          cover
+        </label>
+        <CustomInputFile
+          avatar={coverTmp || cover}
+          clbk={e => handleCover(e.target.files[0])}
+        />
 
-      <button className="btn">ok</button>
-    </form>
+        <label className="label" htmlFor="description">
+          description
+        </label>
+        <textarea
+          className="input"
+          id="description"
+          cols="30"
+          rows="10"
+          defaultValue={description}
+          onChange={e => setDescription(e.target.value)}
+        ></textarea>
+
+        <button className="btn">ok</button>
+      </form>
+    </>
   );
 });

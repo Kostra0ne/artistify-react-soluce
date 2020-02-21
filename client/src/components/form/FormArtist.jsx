@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 // custom tools
+import LabPreview from "../LabPreview";
 import APIHandler from "../../api/APIHandler";
 // styles
 import "./../../styles/form.css";
@@ -70,88 +71,84 @@ export default withRouter(function FormArtist({
     }
   };
 
-  console.log("FORM ARTIST styles", styles);
-
-  // if (selectStylesEl) {
-    if (styles && selectStylesEl.current) {
-      console.log("go go", selectStylesEl);
-      console.log("go go ?", selectStylesEl.current);
-    }
-  // }
-
-  // if (!styles) return null;
-
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <label className="label" htmlFor="name">
-        name
-      </label>
-      <input
-        className="input"
-        id="name"
-        type="text"
-        defaultValue={name}
-        onChange={e => setName(e.target.value)}
-      />
+    <>
+      <h1 className="title diy">D.I.Y (FormArtist)</h1>
+      <p>Code a form to Create/Update artists.</p>
+      <LabPreview name="albumForm" isSmall/>
+      <hr />
 
-      <label className="label" htmlFor="description">
-        description
-      </label>
-      <textarea
-        className="input"
-        id="description"
-        cols="30"
-        rows="30"
-        defaultValue={description}
-        onChange={e => setDescription(e.target.value)}
-      ></textarea>
-
-      <label className="label" htmlFor="style">
-        style
-      </label>
-      {Boolean(styles && styles.length) && (
-        <select
+      <form className="form" onSubmit={handleSubmit}>
+        <label className="label" htmlFor="name">
+          name
+        </label>
+        <input
           className="input"
-          id="style"
-          ref={selectStylesEl}
-          value={styleID}
-          onChange={e => setStyleID(e.target.value)}
-        >
-          {styles.map((s, i) => (
-            <option value={s._id} key={i}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-      )}
-      <label className="label" htmlFor="isBand">
-        is band ?
-      </label>
-      <div className="row justify-start">
-        <label className="label" htmlFor="isband">
-          yes
-        </label>
-        {/* below names are mandatory for multiple input radios tied to the same state's key/value */}
-        <input
-          id="isband"
-          type="radio"
-          name="isBand"
-          checked={isBand === true}
-          onChange={e => setIsBand(true)}
+          id="name"
+          type="text"
+          defaultValue={name}
+          onChange={e => setName(e.target.value)}
         />
-        <label className="label" htmlFor="isnotband">
-          no
-        </label>
-        <input
-          id="isnotband"
-          type="radio"
-          name="isBand"
-          checked={isBand === false}
-          onChange={e => setIsBand(false)}
-        />
-      </div>
 
-      <button className="btn">ok</button>
-    </form>
+        <label className="label" htmlFor="description">
+          description
+        </label>
+        <textarea
+          className="input"
+          id="description"
+          cols="30"
+          rows="30"
+          defaultValue={description}
+          onChange={e => setDescription(e.target.value)}
+        ></textarea>
+
+        <label className="label" htmlFor="style">
+          style
+        </label>
+        {Boolean(styles && styles.length) && (
+          <select
+            className="input"
+            id="style"
+            ref={selectStylesEl}
+            value={styleID}
+            onChange={e => setStyleID(e.target.value)}
+          >
+            {styles.map((s, i) => (
+              <option value={s._id} key={i}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        )}
+        <label className="label" htmlFor="isBand">
+          is band ?
+        </label>
+        <div className="row justify-start">
+          <label className="label" htmlFor="isband">
+            yes
+          </label>
+          {/* below names are mandatory for multiple input radios tied to the same state's key/value */}
+          <input
+            id="isband"
+            type="radio"
+            name="isBand"
+            checked={isBand === true}
+            onChange={e => setIsBand(true)}
+          />
+          <label className="label" htmlFor="isnotband">
+            no
+          </label>
+          <input
+            id="isnotband"
+            type="radio"
+            name="isBand"
+            checked={isBand === false}
+            onChange={e => setIsBand(false)}
+          />
+        </div>
+
+        <button className="btn">ok</button>
+      </form>
+    </>
   );
 });

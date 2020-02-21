@@ -14,8 +14,6 @@ export default function UserFavorites() {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    console.log("fx");
-
     if (favorites.artists && favorites.albums) setIsLoading(false);
   }, [favorites]);
 
@@ -31,12 +29,12 @@ export default function UserFavorites() {
       }
     };
     getFavorites();
-  }, []);
+  }, [currentUser]);
 
   return isLoading ? null : (
     <>
-      <div className="DIY">
-        <h1 className="title">D.I.Y</h1>
+      <div>
+        <h1 className="title diy">D.I.Y</h1>
         <p>
           Fetch currentUser's favorites with axios.
           <br />

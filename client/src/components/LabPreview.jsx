@@ -1,0 +1,30 @@
+import React from "react";
+
+import album from "../assets/img/album.screen.png";
+import albumForm from "../assets/img/album.form.screen.png";
+import albums from "../assets/img/albums.screen.png";
+import artist from "../assets/img/album.screen.png";
+import artistForm from "../assets/img/artist.form.screen.png";
+import artists from "../assets/img/artists.screen.png";
+
+const previews = {
+  album,
+  albumForm,
+  albums,
+  artist,
+  artistForm,
+  artists
+};
+
+export default function LabPreview({ name, isSmall }) {
+  return (
+    <div className="lab-preview">
+      <h1 className="title diy">Image Preview =></h1>
+      <img
+        src={previews[name]}
+        alt="lab preview"
+        style={{ display: "block", width: isSmall ? "50%" : "100%" }}
+      />
+    </div>
+  );
+}

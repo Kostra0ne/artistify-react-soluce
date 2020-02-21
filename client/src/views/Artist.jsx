@@ -6,6 +6,7 @@ import Comments from "../components/comment/Comments";
 import List from "../components/List";
 import Stars from "../components/star/Stars";
 import UserContext from "./../auth/UserContext";
+import LabPreview from "../components/LabPreview";
 // styles
 import "./../styles/artist.css";
 import "./../styles/comment.css";
@@ -65,7 +66,7 @@ export default function Artists({ match }) {
       <p>
         The Stars component allow the end-users to rate an artist/album.
         <br />
-        The black stars represent the average rate for a give resource.
+        The black stars represent the average rate for a given resource.
         <br />
         The yellow stars represent the logged in user rate.
         <br />
@@ -88,6 +89,8 @@ export default function Artists({ match }) {
         related to the current artist.
         <br />
       </p>
+
+      <LabPreview name="artist"/>
 
       <div className="page artist">
         <h1 className="title">{artist.name}</h1>

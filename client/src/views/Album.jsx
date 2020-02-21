@@ -6,6 +6,7 @@ import UserContext from "../auth/UserContext";
 import Comments from "../components/comment/Comments";
 import FormatDate from "../components/FormatDate";
 import Stars from "../components/star/Stars";
+import LabPreview from "../components/LabPreview";
 // styles
 import "../styles/album.css";
 import "../styles/comment.css";
@@ -23,7 +24,8 @@ export default function Album({ match }) {
     const apiRes = await apiHandler.get(
       `/rates/albums/${match.params.id}/users/${currentUser._id}`
     );
-
+      console.log(">>>>", apiRes);
+      
     setUserRate(apiRes.data.userRate);
   };
 
@@ -36,6 +38,8 @@ export default function Album({ match }) {
     try {
       const rate = Number(evt.currentTarget.getAttribute("data-rate"));
       await apiHandler.patch(`/rates/albums/${match.params.id}`, { rate });
+      console.log("here");
+      
       getAlbum();
       getUserRate();
     } catch (apiErr) {
@@ -80,6 +84,8 @@ export default function Album({ match }) {
         in database related to the current artist.
         <br />
       </p>
+
+      <LabPreview name="album"/>
 
       <div className="page album">
         <h1 className="title">{album.title}</h1>

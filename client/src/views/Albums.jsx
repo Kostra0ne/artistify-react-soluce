@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import apiHandler from "../api/APIHandler";
 import CardAlbum from "../components/card/CardAlbum";
 import List from "../components/List";
+import LabPreview from "../components/LabPreview";
 // styles
 import "../styles/card.css";
 import "../styles/icon-favorite.css";
@@ -26,9 +27,9 @@ export default function Albums() {
         <br />
         Display a card for each album.
         <br />
-        On click, provide a router {`<Link>`} to albums/album.id.
+        Provide a router {`<Link>`} to="albums/album.id",
         <br />
-        This view should be rendered by a separate component.
+        leading to separate Album (details) component.
         <br />
         If the albums list is empty, provide a default view.
       </p>
@@ -39,6 +40,9 @@ export default function Albums() {
         When clicked, send an axios.patch request to add the album to the
         user's favorites.
       </p>
+
+      <LabPreview name="albums" />
+
       <hr />
       <h1 className="title">All albums</h1>
       <List

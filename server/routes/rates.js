@@ -38,7 +38,6 @@ router.patch("/rates/:resourceType/:id", async (req, res, next) => {
     if (dbRes) return res.status(200).json(dbRes);
 
     if (!dbRes) {
-      console.log("no rate for this resource yet");
       // the user has not rate this album yet
       const dbRes2 = await currentModel.findByIdAndUpdate(req.params.id, {
         $push: { rates: { rate, author: currentUserId } }

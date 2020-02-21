@@ -43,7 +43,7 @@ const artists = [
   {
     name: "Prince",
     isBand: false,
-    description: "another king of pop",
+    description: "Other King of pop",
     rates: [],
     style: "5de9c3cffa023e21a766a60a"
   },

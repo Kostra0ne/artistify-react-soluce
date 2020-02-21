@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import apiHandler from "../api/APIHandler";
 import CardArtist from "../components/card/CardArtist";
 import List from "../components/List";
+import LabPreview from "../components/LabPreview";
 // styles
 import "../styles/card.css";
 
@@ -26,9 +27,9 @@ export default class Artists extends Component {
           <br />
           Display a card for each album.
           <br />
-          On click, provide a router {`<Link>`} to artists/artists.id.
+          Provide a router {`<Link>`} to="artists/artists.id",
           <br />
-          This view should be rendered by a separate component.
+          leading to separate component Artist (details) component.
           <br />
           If the artists list is empty, provide a default view.
         </p>
@@ -40,7 +41,10 @@ export default class Artists extends Component {
           When clicked, send an axios.patch request to add the artist to the
           user's favorites.
         </p>
+        
         <hr />
+
+        <LabPreview name="artists"/>
 
         <h1 className="title">All artists</h1>
         <List

@@ -6,7 +6,6 @@ import IconFav from "../icon/IconFavorite";
 import "./../../styles/icon-color.css";
 
 export default function CardArtist({ data }) {
-  console.log(data);
   
   return (
     <React.Fragment>

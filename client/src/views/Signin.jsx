@@ -15,7 +15,7 @@ export default function Signin(props) {
     try {
       const apiRes = await APIHandler.post("/signin", { email, password });
       setCurrentUser(apiRes.data.currentUser);
-      props.history.push("/");
+      props.history.push("/dashboard");
     } catch (err) {
       setCurrentUser(null);
     }
