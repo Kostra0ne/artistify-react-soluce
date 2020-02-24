@@ -48,12 +48,12 @@ router.post("/signup", uploader.single("avatar"), (req, res, next) => {
   userModel
     .create(newUser)
     .then(newUserFromDB => {
-      // passport in action below
-      req.login(newUserFromDB, err => {
-        if (err) next(err);
-      });
+      res.status(200).json({msg: "signup ok"});
     })
-    .catch(next);
+    .catch(err => {
+      console.log("signup error", err);
+      next(err);
+    });
 });
 
 router.post("/signin", (req, res, next) => {

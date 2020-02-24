@@ -1,29 +1,110 @@
-- add cover upload for artists
-- plug secured (https or private key) contact form
-- sort/filter resources by rates
-- sort/filter resources by date
-- sort resources alphabeticaly
-- sort resources by creation date
-- sort album by release date
-- show user favorites dedicated in dashboard tab
-- enable third party APIs calls to stream content for various resources
-- upvote / downvote comments
-- friend / unfriend system
-- chat with friends
-- unregister user
-- home
-- list all styles cards (+ associated resources in details)
-- list all labels cards (+ associated resources in details)
+============
+D.I.Y's
+============
+
+-------------
+A / Forms
+-------------
+
+Forms for labels and styles are provided. You will need to implement those :
+
+- Form Create Artist
+Code a form to Create/Update artists.
+
+***
+
+- Form Create Album
+Code a form to Create/Update artists.
+
+Warnings :
+- artist's model depends on styles
+- album's model depends on artist and label
 
 
+-------------
+B / List and cards
+-------------
 
- D) missing auth middlewares (backend)
- on protected routes: should perform systematic server side check auth cookie and send 403 error if missing 
+- Artists
+Fetch all artists from the database.
+Display a card for each album.
+Provide a router <Link> to=`artists/${artists._id}`, leading to separate component Artist (details) component.
+If the artists list is empty, provide a default view.
+
+- Albums
+Fetch all Albums from the database.
+Display a card for each album.
+Provide a router <Link> to=`albums/${album._id}`, leading to separate Album (details) component.
+If the albums list is empty, provide a default view.
 
 
- E) axios interceptors leverage ?
- systematicaly intercept all 403 response and handle automatic signout
+-------------
+C / Resources Details
+-------------
+- Artists
+Fetch all artists from the database.
+Display a card for each album.
+Provide a router <Link> to="artists/artists.id",
+leading to separate component Artist (details) component.
+If the artists list is empty, provide a default view.
 
- F) handling deleted resources
- - check null references in other collections (check populate)
- - display view components for missing resources
+- Albums
+Fetch all Albums from the database.
+Display a card for each album.
+Provide a router <Link> to="albums/album.id",
+leading to separate Album (details) component.
+If the albums list is empty, provide a default view.
+
+- Artist / Album (details)
+Use the image below to code the {`<Album />`} component.
+This component import 2 bonus child components: <Stars /> and <Comments />
+
+
+============
+Bonuses
+============
+
+***
+
+- Comments
+Import a custom <Comments /> allowing the end-users to post comments in database related to the current artist/album.
+
+***
+
+- Stars
+The Stars component allow the end-users to rate an artist/album.
+The black stars represent the average rate for a given resource.
+The yellow stars represent the logged in user rate from the current album.
+Bonus: make it modular to rate labels/styles as well.
+
+***
+
+- IconFavorite
+Import a custom <IconFavorite /> on each artist card.
+When clicked, send an axios.patch request to add the artist to the user's favorites.
+
+***
+
+- User favorites
+Fetch currentUser's favorites with axios.
+Update the rendered template to display them.
+It would be better to create a dedicated component.
+
+***
+
+- Latest Artists / Latest Albums
+
+Code a complete client/server cycle to fetch the 2 latests artists AND albums.
+Why don't you try CSS grid to organise the results display ?
+
+***
+
+- Best rated artists / albums
+Code a complete client/server cycle to fetch the 4 best rated artists AND albums
+
+*** 
+
+- Dataviz
+
+Freestyle: Use chart.js or d3.js libs to create a nice looking chart, using the artistify api's data.
+

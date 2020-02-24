@@ -1,31 +1,44 @@
+$ git clone https://github.com/Kostra0ne/artistify-react-diy.git
 
-clone the repo 
-$ git clone https://github.com/owlab-io/artistify.git
+###########################
+# server config 
+###########################
 
------
+$ cd server
+$ npm install
+$ touch .env
+$ nano
 
-setup a .env for server
-assign correct values to the mandatory following keys: 
+# set .env like so :
+# CLIENT_URL = http://localhost:3000
+# CLOUDINARY_NAME = your-name
+# CLOUDINARY_KEY = your-cloudinary-key
+# CLOUDINARY_SECRET = your-cloudinary-secret
+# MONGO_URI = mongodb://localhost/your-db-name
+# PORT = 4000
+# SECRET_SESSION = a-long-string-that-should-be-hard-to-crack
 
-CLIENT_URL = ???
-CLOUDINARY_NAME = ???s
-CLOUDINARY_KEY = ???
-CLOUDINARY_SECRET = ???
-MONGO_URI = ???
-PORT = ???
-SECRET_SESSION = ???
+# you may want to seed the database
+$ node bin/seed.js
 
------
+# then you're ready to launch the backend
+$ npm run dev
 
-setup a .env for client
-assign correct values to the mandatory following keys: 
+###########################
+# client config
+###########################
 
-REACT_APP_BACKEND_URL = ???
+$ cd ./../client
+$ npm install
+$ touch .env
+$ nano .env
 
------
+# set .env like so :
+# REACT_APP_BACKEND_URL = http://localhost:4000
 
-from ./artistify
-launch the install script
-$ npm run installer
+$ npm start
 
------
+
+First step signup, the process is provided.
+Then, change the user role via Compass and set it as "admin"
+You will now have access to the admin nav-bar, to manage/create artists/albums/labels/styles

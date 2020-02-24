@@ -72,7 +72,7 @@ export default function Home() {
 
       <img className="home-cover" src={stage} alt="stage in a music festival" />
       
-      <h1 className="title diy">D.I.Y</h1>
+      <h1 className="title diy">D.I.Y (Latest Artists / Latest Albums)</h1>
       <p className="parag">
         Code a complete client/server cycle to fetch the 4 best rated artists
         AND albums

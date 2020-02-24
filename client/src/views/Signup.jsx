@@ -8,8 +8,8 @@ export default class Signup extends Component {
   state = {
     avatar: "",
     tmpAvatar: "",
-    username: "toto",
-    email: "foo@bar.bar",
+    username: "admin",
+    email: "admin@artistify.io",
     password: "12345"
   };
 
@@ -25,6 +25,8 @@ export default class Signup extends Component {
 
     try {
       await APIHandler.post("/signup", fd);
+      console.log("ok");
+      
       this.props.history.push("/signin");
     } catch (err) {
       console.error(err);

@@ -1,24 +1,8 @@
 
 TODO:
 
-
-B) admin : forms artist AND albums
+admin : forms artist AND albums
 -- FIX select/option default behaviour :
 ---- the forms are listening to onChange events:
  if the user doesn't select one time, empty objectid references are sent
-
-D) 
-
-
-
-DONE:
-
-A) pages artists/:id and albums/:id
--- rates posting behaviour unstable
--- user rate not showing
--- should create one unified server route to handle different resources types rating
-
-C) auth user page refresh problem (client)
-when reloading  page on a unprotected route, the currentUser is lost even if auth-cookie persists 
-(ex: the admin nav disapears)
 
