@@ -1,11 +1,11 @@
 import React from "react";
 
-import album from "../assets/img/album.screen.png";
-import albumForm from "../assets/img/album.form.screen.png";
-import albums from "../assets/img/albums.screen.png";
-import artist from "../assets/img/album.screen.png";
-import artistForm from "../assets/img/artist.form.screen.png";
-import artists from "../assets/img/artists.screen.png";
+import album from "../assets/img/previews/album.screen.png";
+import albumForm from "../assets/img/previews/album.form.screen.png";
+import albums from "../assets/img/previews/albums.screen.png";
+import artist from "../assets/img/previews/album.screen.png";
+import artistForm from "../assets/img/previews/artist.form.screen.png";
+import artists from "../assets/img/previews/artists.screen.png";
 
 const previews = {
   album,
