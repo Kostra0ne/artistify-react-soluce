@@ -18,7 +18,7 @@ $ nano
 # PORT = 4000
 # SECRET_SESSION = a-long-string-that-should-be-hard-to-crack
 
-# you may want to seed the database
+# seed the database
 $ node bin/seed.js
 
 # then you're ready to launch the backend
