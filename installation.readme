@@ -20,6 +20,7 @@ $ nano
 
 # seed the database
 $ node bin/seed.js
+$ ctrl + v to kill the node shell
 
 # then you're ready to launch the backend
 $ npm run dev
@@ -28,7 +29,7 @@ $ npm run dev
 # client config
 ###########################
 
-$ cd ./../client
+$ cd client
 $ npm install
 $ touch .env
 $ nano .env
