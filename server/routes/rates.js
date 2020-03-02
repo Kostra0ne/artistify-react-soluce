@@ -4,18 +4,38 @@
 
 const express = require("express");
 const router = new express.Router();
+const getAverage = require("../utils/getAverageRate")
 
 const models = {
   albums: require("../models/Album"),
   artists: require("../models/Artist")
 };
 
-router.get("/rates/:resourceType/:rId/users/:uId", async (req, res, next) => {
+/**
+ * @description Get the average rate for one given resource (album/artist/label/style)
+ */
+router.get("/rates/:resourceType/:resourceId/", async (req, res, next) => {
+  try {
+    const avgRate = await getAverage(req.params.resourceType, req.params.resourceId);
+    console.log("avgRate");
+    console.log(req.params.resourceType, avgRate);
+    
+    res.status(200).json({avgRate})
+  } catch (err) {
+    next(err);
+  }
+
+});
+
+/**
+ * @description Get the rate for one given resource (album/artist/label/style) for one given user
+ */
+router.get("/rates/:resourceType/:resourceId/users/:userId", async (req, res, next) => {
   models[req.params.resourceType]
-    .findById(req.params.rId, {
-      rates: { $elemMatch: { author: req.params.uId } }
+    .findById(req.params.resourceId, {
+      rates: { $elemMatch: { author: req.params.userId } }
     })
-    .then(userRate => res.status(200).send({ userRate }))
+    .then(dbRes => res.status(200).send({ userRate: dbRes.rates[0] ? dbRes.rates[0].rate : 0 }))
     .catch(next);
 });
 
@@ -28,7 +48,7 @@ router.patch("/rates/:resourceType/:id", async (req, res, next) => {
   const { rate } = req.body;
 
   try {
-    // try to find the previous rate, if nay
+    // try to find the previous rate
     const dbRes = await currentModel.findOneAndUpdate(
       { _id: req.params.id, "rates.author": currentUserId },
       { $set: { "rates.$": { rate: req.body.rate, author: currentUserId } } },
@@ -37,17 +57,17 @@ router.patch("/rates/:resourceType/:id", async (req, res, next) => {
 
     if (dbRes) return res.status(200).json(dbRes);
 
-    if (!dbRes) {
-      // the user has not rate this album yet
-      const dbRes2 = await currentModel.findByIdAndUpdate(req.params.id, {
-        $push: { rates: { rate, author: currentUserId } }
-      });
-      res.status(200).json(dbRes2);
-    }
+    // the user has not rate this resource yet
+    const dbRes2 = await currentModel.findByIdAndUpdate(req.params.id, {
+      $push: { rates: { rate, author: currentUserId } }
+    },
+      { new: true }
+    );
+    res.status(200).json(dbRes2);
 
     // done !
   } catch (dbErr) {
-    res.status(500).json(dbErr);
+    next(dbErr);
   }
 });
 

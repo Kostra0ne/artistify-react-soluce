@@ -7,7 +7,7 @@ $ git clone https://github.com/Kostra0ne/artistify-react-diy.git
 $ cd server
 $ npm install
 $ touch .env
-$ nano
+$ nano .env
 
 # set .env like so :
 # CLIENT_URL = http://localhost:3000
@@ -20,7 +20,7 @@ $ nano
 
 # seed the database
 $ node bin/seed.js
-$ ctrl + v to kill the node shell
+$ ctrl + c to kill the node shell
 
 # then you're ready to launch the backend
 $ npm run dev

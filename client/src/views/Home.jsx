@@ -1,8 +1,8 @@
 import React from "react";
 // custom tools
-// import Latest from "../components/Latest";
-// import CardArtist from "../components/card/CardArtist";
-// import CardAlbum from "../components/card/CardAlbum";
+import Latest from "../components/Latest";
+import CardArtist from "../components/card/CardArtist";
+import CardAlbum from "../components/card/CardAlbum";
 // images
 import crowd from "../assets/img/festival-crowd-1.jpg";
 import vynils from "../assets/img/vynils2.jpg";
@@ -62,13 +62,13 @@ export default function Home() {
         molestias iusto modi aspernatur, similique quae esse assumenda
         laboriosam tempore recusandae.
       </p>
-      {/* <div className="latests">
+      <div className="latests">
         <h2 className="title medium">Latest artists</h2>
         <Latest endpoint="artists" limit="2" Component={CardArtist} />
 
         <h2 className="title medium">Latest albums</h2>
         <Latest endpoint="albums" limit="2" Component={CardAlbum} />
-      </div> */}
+      </div>
 
       <img className="home-cover" src={stage} alt="stage in a music festival" />
       

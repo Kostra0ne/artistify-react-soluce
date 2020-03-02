@@ -3,18 +3,15 @@ import React, { useState, useEffect } from "react";
 import apiHandler from "./../api/APIHandler";
 import List from "./List";
 
-export default function Latest({ endpoint, limit, Component }) {
+export default function Latest({ endpoint, limit = 2, Component }) {
   const [latest, setLatest] = useState([]);
 
   useEffect(() => {
-    // component did mount
     apiHandler
       .get(`/${endpoint}?sort=createdAt&order=-1&limit=${limit}`)
-      .then(apiRes => {
-        setLatest(apiRes.data[endpoint]);
-      })
+      .then(apiRes => setLatest(apiRes.data[endpoint]))
       .catch(apiErr => console.error(apiErr));
-  // }, []);
+
   }, [endpoint, limit]);
 
   return latest.length ? (

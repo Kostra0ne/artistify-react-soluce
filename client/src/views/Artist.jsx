@@ -1,62 +1,75 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 // custom tools
-import apiHandler from "../api/APIHandler";
-// import CardAlbum from "../components/card/CardAlbum";
-// import Comments from "../components/comment/Comments";
+import { useAuth } from "../auth/useAuth";
+import apiHandler from "./../api/APIHandler";
+import Discography from "./../components/Discography";
+import Comments from "../components/comment/Comments";
 // import List from "../components/List";
-// import Stars from "../components/star/Stars";
-import UserContext from "./../auth/UserContext";
-import LabPreview from "../components/LabPreview";
+import Stars from "../components/star/Stars";
 // styles
 import "./../styles/artist.css";
 import "./../styles/comment.css";
 import "./../styles/star.css";
 
-export default function Artists({ match }) {
-  const userContext = useContext(UserContext);
-  const { currentUser } = userContext;
+export default function Artist({ match }) {
+  const { currentUser, isLoading } = useAuth();
+  const [{ artist, albums, avgRate, userRate }, setState] = useState(
+    {
+      artist: null,
+      albums: [],
+      avgRate: null,
+      userRate: null
+    }
+  );
+
+  useEffect(() => {
+    apiHandler.get(`/artists/${match.params.id}`)
+      .then(apiRes => setState({ artist: apiRes.data.artist, albums: apiRes.data.albums }))
+      .catch(apiErr => console.error(apiErr));
+  }, []);
+
+  // get the avg rate for this artist
+  useEffect(() => {
+    if (!avgRate) {
+      apiHandler.get(`/rates/artists/${match.params.id}`)
+        .then(apiRes => setState((prevValue) => ({ ...prevValue, avgRate: apiRes.data.avgRate })))
+        .catch(apiErr => console.error(apiErr));
+    }
+  }, [avgRate]);
+
+  // get the loggedin user's rate for this artist
+  useEffect(() => {
+    if (!isLoading && currentUser && Object.keys(currentUser).length && !userRate) {
+      apiHandler.get(`/rates/artists/${match.params.id}/users/${currentUser._id}`)
+        .then(apiRes => setState((prevValue) => ({ ...prevValue, userRate: apiRes.data.userRate })))
+        .catch(apiErr => console.error(apiErr));
+    }
+  }, [currentUser, userRate]);
+
+  const updateUserRate = (rate) => {
+    apiHandler.patch(`/rates/artists/${match.params.id}`, { rate })
+      .then(() => setState((prevValue) => ({ ...prevValue, userRate: rate })))
+      .catch(apiErr => console.error(apiErr))
+  };
 
   return (
-    <>
-      <h1 className="title diy">D.I.Y (Artist)</h1>
-      <p>
-        Use the image below to code the {`<Artist />`} component.
-        <br />
-        This component import child components: {`<Stars />`}, {`<Comments />`}{" "}
-        and {`<Discography />`}
-      </p>
+    (artist && albums) ? <div className="page artist">
+      <h1 className="title">{artist.name}</h1>
 
-      <h1 className="title diy">D.I.Y (Stars)</h1>
-      <p>
-        The Stars component allow the end-users to rate an artist/album.
-        <br />
-        The black stars represent the average rate for a given resource.
-        <br />
-        The yellow stars represent the logged in user rate.
-        <br />
-        Bonus: make it modular to rate labels/styles as well.
-      </p>
+      <div className="all-stars">
+        <Stars avgRate={avgRate} title="Average rate" />
+        {(currentUser && !isLoading) && <Stars clbk={updateUserRate} avgRate={userRate} css="user" title="My rate" />}
+      </div>
 
-      <hr />
+      <div className="description">
+        <p>music style: {artist.style.name}</p>
+        <p>{artist.description}</p>
+      </div>
 
-      <h1 className="title diy">D.I.Y (Discography)</h1>
-      <p>
-        Code a Discography component displaying all the albums related to the
-        current artist if any, <br />else display the appropriate message.
-        <br />
-      </p>
-      <hr />
+      <Comments resourceType="artists" />
 
-      <h1 className="title diy">D.I.Y (Comments)</h1>
-      <p>
-        Import a custom {`<Comments />`} allowing the end-users to post comments
-        related to the current artist.
-        <br />
-      </p>
-
-      <LabPreview name="artist"/>
-
-     
-    </>
+      <Discography albums={albums} />
+    </div> :
+      <p>loading...</p>
   );
 }

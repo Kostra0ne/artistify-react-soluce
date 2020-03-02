@@ -7,12 +7,6 @@ const router = new express.Router();
 const albumModel = require("../models/Album");
 const uploader = require("./../config/cloudinary");
 
-const getAverageRate = async idAlbum => {
-  // use agregate features @ mongo db to code this feature
-  // https://docs.mongodb.com/manual/aggregation/
-  res.status(200).json({ msg: "@todo" })
-};
-
 router.get("/albums", (req, res, next) => {
   // let's determine the sort query either a number or an empty object
   const sortQ = req.query.sort
@@ -24,48 +18,76 @@ router.get("/albums", (req, res, next) => {
   albumModel
     .find() // fetch all documents from albums collection
     .populate({
-      // populate "joins" uses provided objectId references an object from an other collection
+      // populate "joins" uses provided objectId to reference an object from an other collection
       path: "artist", // here the associated artist document will be fetched as well
       populate: {
         // one can nest population
-        path: "style" // here the style document asssociated to the artist is feched as well
+        path: "style" // here the style document asssociated to the artist is fetched as well
       }
     })
     .populate("label") // chaining population is also possible, here for label documents
     .sort(sortQ) // the provided sort query comes into action here
     .limit(limitQ) // same thing for the limit query
     .then(async albums => {
-      // AVG : things are getting tricky here ! :) 
-      // the following map is async, updating each artist with an avg rate
-      const albumsWithRatesAVG = await Promise.all(
+      const albumsWithIsFavorite = await Promise.all(
         albums.map(async album => {
+          // let's create a clone of each document since they are read-only by default
           const copy = album.toJSON();
-          // copy.avg = await getAverageRate(album._id);
           copy.isFavorite =
             req.user && req.user.favorites.albums.includes(copy._id.toString());
           return copy;
         })
       );
 
-      res.json({ albums: albumsWithRatesAVG });
+      res.json({ albums: albumsWithIsFavorite }); // send the augmented result back to client
     })
     .catch(next);
 });
 
 router.get("/albums/:id", (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+  albumModel.findById(req.params.id)
+    .populate("label")
+    .then(album => res.status(200).json(album))
+    .catch(next)
 });
 
 router.post("/albums", uploader.single("cover"), (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+
+  const { title, artist, album, releaseDate } = req.body;
+
+  const newAlbum = {
+    title, artist, album, releaseDate
+  }
+
+  if (req.file) newAlbum.cover = req.file.secure_url;
+
+  console.log(newAlbum);
+
+  albumModel.create(newAlbum)
+    .then(album => res.status(201).json(album))
+    .catch(next)
 });
 
 router.patch("/albums/:id", uploader.single("cover"), (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+  // const { title, artist, album, releaseDate } = req.body;
+
+  // const updatedAlbum = {
+  //   title, artist, album, releaseDate
+  // }
+
+  // if (req.file) updatedAlbum.cover = req.file.secure_url;
+
+  // console.log(updatedAlbum);
+
+  albumModel.findByIdAndUpdate(req.params.id, req.body)
+    .then(album => res.status(201).json(album))
+    .catch(next)
 });
 
 router.delete("/albums/:id", (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+  albumModel.findOneAndDelete({ _id: req.params.id })
+    .then(album => res.status(200).json(album))
+    .catch(next)
 });
 
 module.exports = router;

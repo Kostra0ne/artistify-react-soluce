@@ -8,34 +8,25 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User"
   },
-  category: {
-    type: String,
-    enum: ["artist", "album", "labels", "styles"]
+  date: {
+    type: Date,
+    default: Date.now
   },
-  date: Date,
-  likes: {
-    type: Number,
-    default: 0
-  },
-  artist: {
+  artists: {
     type: Schema.Types.ObjectId,
     ref: "Artist",
-    default: null
   },
-  album: {
+  albums: {
     type: Schema.Types.ObjectId,
     ref: "Album",
-    default: null
   },
-  label: {
+  labels: {
     type: Schema.Types.ObjectId,
     ref: "Label",
-    default: null
   },
-  style: {
+  styles: {
     type: Schema.Types.ObjectId,
     ref: "Style",
-    default: null
   }
 });
 

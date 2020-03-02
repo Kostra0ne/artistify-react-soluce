@@ -11,12 +11,10 @@ export default function IconFavorite({
 }) {
   const [isFavorite, setIsFavorite] = useState(isAlreadyFavorite);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = (e) => {
+    e.preventDefault();
     APIHandler.patch(`/users/favorites/${resourceType}/${resourceId}`, {})
-      .then(apiRes => {
-        console.log(apiRes.data);
-        setIsFavorite(apiRes.data.isFavorite === true);
-      })
+      .then(apiRes => setIsFavorite(apiRes.data.isFavorite === true))
       .catch(apiErr => console.error(apiErr));
   };
 
@@ -25,7 +23,7 @@ export default function IconFavorite({
       onClick={toggleFavorite}
       className={`fa-lg icon-favorite is-clickable ${
         isFavorite ? "is-favorite" : ""
-      }`}
+        }`}
       icon={isFavorite ? faHeartFull : faHeart}
       size="xs"
     />

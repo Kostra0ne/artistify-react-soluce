@@ -1,7 +1,6 @@
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  /* grid-template-rows: repeat(auto-fit, minmax(220px, 1fr)); */
   grid-gap: 1rem;
 }
 
@@ -14,6 +13,7 @@
   border-left: 1px solid #0000001f;
   box-shadow: 6px 6px 15px -9px rgba(0, 0, 0, 0.75);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
@@ -21,7 +21,7 @@
 }
 
 .card .title {
-  text-align: center;
+  font-size: 1rem;
 }
 
 .card .link:hover {
@@ -35,6 +35,14 @@
   left: 0;
   height: 16px;
   width: 16px;
+}
+
+.card.artist .title {
+  text-align: center;
+}
+
+.card.album .title {
+  align-self: start;
 }
 
 .card.album .cover {

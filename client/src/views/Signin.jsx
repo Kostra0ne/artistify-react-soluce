@@ -1,14 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+
 import { Link } from "react-router-dom";
 // custom tools
 import UserContext from "../auth/UserContext";
 import APIHandler from "../api/APIHandler";
 
+
+
 export default function Signin(props) {
   const [email, setEmail] = useState("admin@artistify.io");
   const [password, setPassword] = useState("12345");
   const userContext = useContext(UserContext);
-  const { setCurrentUser } = userContext;
+  const { setCurrentUser, currentUser } = userContext;
+
+  useEffect(() => {    
+    if (currentUser) props.history.push("/dashboard");
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();

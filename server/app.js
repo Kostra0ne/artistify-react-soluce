@@ -70,8 +70,8 @@ if (_DEVMODE === true) {
         "https://res.cloudinary.com/gdaconcept/image/upload/v1575298339/user-pictures/jadlcjjnspfhknucjfkd.png",
       role: "admin",
       favorites: {
-        artists: ["5ded0f32701e2f8732a0513c"],
-        albums: ["5ded24e254c2839b2badf011"],
+        artists: ["5e53b3e1ed3e704208600e46"],
+        albums: ["5e53b3e1ed3e704208600e47"],
         styles: [],
         labels: []
       }
@@ -99,6 +99,7 @@ const authRouter = require("./routes/auth.js");
 const commentsRouter = require("./routes/comments.js");
 const contactRouter = require("./routes/contact.js");
 const labelRouter = require("./routes/labels.js");
+const latestsRouter = require("./routes/latests.js");
 const ratesRouter = require("./routes/rates.js");
 const stylesRouter = require("./routes/styles.js");
 const searchRouter = require("./routes/search.js");
@@ -110,6 +111,7 @@ app.use(authRouter);
 app.use(commentsRouter);
 app.use(contactRouter);
 app.use(labelRouter);
+// app.use(latestsRouter);
 app.use(ratesRouter);
 app.use(searchRouter);
 app.use(stylesRouter);

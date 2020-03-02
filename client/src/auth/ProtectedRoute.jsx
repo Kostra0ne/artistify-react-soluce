@@ -13,6 +13,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
   // return default template while performing async auth task
   if (isLoading) return <div>Loading...</div>;
   return isLoggedIn ? (
+    
     // if logged in, return a regular Route component
     // this Route gets any passed (...rested) props in a literal object
     <Route {...rest} render={props => <Component {...props} />} />

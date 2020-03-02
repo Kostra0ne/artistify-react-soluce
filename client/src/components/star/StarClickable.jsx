@@ -14,7 +14,7 @@ export default function StarClickable({ shape, clbk, rate }) {
   return (
     <FontAwesomeIcon
       data-rate={rate}
-      onClick={clbk}
+      onClick={() => clbk(rate)}
       className={css}
       icon={icon}
     ></FontAwesomeIcon>

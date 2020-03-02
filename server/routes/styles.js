@@ -10,7 +10,7 @@ const styleModel = require("../models/Style");
 router.get("/styles", (req, res, next) => {
   styleModel
     .find()
-    .then(dbRes => res.status(200).json({ styles: dbRes }))
+    .then(dbRes => res.status(200).json(dbRes))
     .catch(next);
 });
 

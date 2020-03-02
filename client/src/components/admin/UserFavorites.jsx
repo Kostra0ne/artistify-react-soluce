@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHeart } from "@fortawesome/free-solid-svg-icons";
+// import { faEye } from "@fortawesome/free-solid-svg-icons";
 //custom tools
-import { useAuth } from "../../auth/useAuth";
-import APIHandler from "../../api/APIHandler";
+// import { useAuth } from "../../auth/useAuth";
+// import APIHandler from "../../api/APIHandler";
 // styles
 
 export default function UserFavorites() {
-  const [favorites, setFavorites] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const { currentUser } = useAuth();
+  const isLoading = false;
+  // const [favorites, setFavorites] = useState({});
+  // const [isLoading, setIsLoading] = useState(false);
+  // const { currentUser } = useAuth();
 
 
   return isLoading ? null : (

@@ -2,12 +2,9 @@
 D.I.Y's
 ============
 
-
 Our client demands a react version of the great artistify app !!!
 The instructions below should help you to perfom the task.
 You can find some preview images of the expected result @ client/src/assets/img/previews/
-
-
 
 -------------
 A / Forms
@@ -48,28 +45,22 @@ If the albums list is empty, provide a default view.
 -------------
 C / Resources Details
 -------------
-- Artists
-Fetch all artists from the database.
-Display a card for each album.
-Provide a router <Link> to="artists/artists.id",
-leading to separate component Artist (details) component.
-If the artists list is empty, provide a default view.
 
-- Albums
-Fetch all Albums from the database.
-Display a card for each album.
-Provide a router <Link> to="albums/album.id",
-leading to separate Album (details) component.
-If the albums list is empty, provide a default view.
+- Artist (details)
+Use the image below to code the <Album /> component.
+This component import 3 bonus child components: <Stars />, <Comments />  and <Discography />
 
-- Artist / Album (details)
-Use the image below to code the {`<Album />`} component.
+- Album (details)
+Use the image below to code the <Album /> component.
 This component import 2 bonus child components: <Stars /> and <Comments />
 
 
 ============
 Bonuses
 ============
+
+- Discography
+Code a Discography component displaying all the albums related to a given artist's id
 
 ***
 
