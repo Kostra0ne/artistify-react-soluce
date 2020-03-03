@@ -30,6 +30,13 @@ export default function Album({ match }) {
       .catch(apiErr => console.error(apiErr))
   }, []);
 
+  useEffect(() => {
+    apiHandler.get(`/rates/albums/${match.params.id}`)
+      .then(apiRes => setState((prevValue) => ({ ...prevValue, avgRate: apiRes.data.avgRate })))
+      .catch(apiErr => console.error(apiErr));
+  }, [userRate]);
+
+
   // get the loggedin user's rate for this artist
   useEffect(() => {
     if (!isLoading && currentUser && Object.keys(currentUser).length && !userRate) {

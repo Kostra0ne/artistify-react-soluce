@@ -18,7 +18,7 @@ router.get("/rates/:resourceType/:resourceId/", async (req, res, next) => {
   try {
     const avgRate = await getAverage(req.params.resourceType, req.params.resourceId);
     console.log("avgRate");
-    console.log(req.params.resourceType, avgRate);
+    console.log(req.params.resourceType, req.params.resourceId, avgRate);
     
     res.status(200).json({avgRate})
   } catch (err) {

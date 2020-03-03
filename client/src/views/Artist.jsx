@@ -30,12 +30,10 @@ export default function Artist({ match }) {
 
   // get the avg rate for this artist
   useEffect(() => {
-    if (!avgRate) {
-      apiHandler.get(`/rates/artists/${match.params.id}`)
-        .then(apiRes => setState((prevValue) => ({ ...prevValue, avgRate: apiRes.data.avgRate })))
-        .catch(apiErr => console.error(apiErr));
-    }
-  }, [avgRate]);
+    apiHandler.get(`/rates/artists/${match.params.id}`)
+      .then(apiRes => setState((prevValue) => ({ ...prevValue, avgRate: apiRes.data.avgRate })))
+      .catch(apiErr => console.error(apiErr));
+  }, [userRate]);
 
   // get the loggedin user's rate for this artist
   useEffect(() => {

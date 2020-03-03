@@ -14,7 +14,7 @@ export default withRouter(function Comments({ resourceType, match }) {
   }, []);
 
   const pushComment = (c) => {
-    setComments(prev => [...prev, c])
+    setComments(prev => [c, ...prev])
   };
 
   return (

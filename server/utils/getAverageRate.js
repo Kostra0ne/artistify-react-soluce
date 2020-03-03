@@ -1,23 +1,26 @@
+const mongoose = require("mongoose");
+
 const models = {
     albums: require("../models/Album"),
     artists: require("../models/Artist")
 };
 
 const getAverageRate = async (typeResource, idResource) => {
-    // use agregate features @ mongo db to code this feature
-    // https://docs.mongodb.com/manual/aggregation/
+    const id = typeof idResource === "string" ? mongoose.Types.ObjectId(idResource) : idResource;
     const avg = await models[typeResource].aggregate([
+        { $match: { _id: id } },
         { $unwind: "$rates" },
-        { $match: { _id: idResource } },
         {
             $group: {
-                _id: "$_id",
-                avgRate: { $avg: "$rates.rate" }
-            }
-        }
-    ]);
+                _id: "$rates.author",
+                rate: { $avg: "$rates.rate" }
+            },
 
-    return avg.length ? avg[0].avgRate : 0;
+        }
+    ])
+
+    return avg.length ? avg[0].rate : 0;
 };
+
 
 module.exports = getAverageRate;

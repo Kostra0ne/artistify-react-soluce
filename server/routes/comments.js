@@ -7,7 +7,7 @@ const router = new express.Router();
 const commentModel = require("../models/Comment");
 
 router.get("/comments/:type/:id", async (req, res, next) => {
-  commentModel.find({ [req.params.type]: req.params.id })
+  commentModel.find({ [req.params.type]: req.params.id }).sort({date: -1})
     .populate("author")
     .then(dbRes => res.status(200).json(dbRes))
     .catch(next)
