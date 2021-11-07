@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import withRouter from "../../auth/withRouter";
 import APIHandler from "./../../api/APIHandler";
 // styles
 import "./../../styles/form.css";

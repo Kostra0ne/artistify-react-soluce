@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import withRouter from "../../auth/withRouter";
 // custom tools
 import CustomInputFile from "./../icon/IconAvatarAdmin";
 import APIHandler from "./../../api/APIHandler"

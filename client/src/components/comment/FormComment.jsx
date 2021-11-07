@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { withRouter } from "react-router-dom";
+import withRouter from "../../auth/withRouter";
 import apiHandler from "../../api/APIHandler";
 
 export default withRouter(function FormComment({ pushComment, match, resourceType }) {

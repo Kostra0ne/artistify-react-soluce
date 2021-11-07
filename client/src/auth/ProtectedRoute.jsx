@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
 
 /* 
@@ -8,7 +8,7 @@ which will cause all remaining (user supplied) arguments to be placed within a "
 Only the last parameter can be a "rest parameter".
 */
 // line below : use of the rest parameter
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({ component: Component, ...rest }) => {
   const { isLoggedIn, isLoading } = useAuth();
   // return default template while performing async auth task
   if (isLoading) return <div>Loading...</div>;
@@ -19,6 +19,8 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route {...rest} render={props => <Component {...props} />} />
   ) : (
     // if not logged in redirect to signin
-    <Redirect to="/signin" />
+    <Navigate to={'/signin'} />
   );
 };
+
+export default ProtectedRoute

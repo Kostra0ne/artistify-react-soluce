@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import withRouter from "../../auth/withRouter";
 // custom tools
 import APIHandler from "./../../api/APIHandler";
 // styles
